@@ -1,33 +1,31 @@
 import sqlite3
+from db_config import DB_PATH
 
-# Connect to a database (creates it if it doesn't exist)
-conn = sqlite3.connect('/Users/kiransripathi/Desktop/Python/test_database.db')
-cursor = conn.cursor()
+def get_connection():
+    return sqlite3.connect(DB_PATH)
+# DB_PATH = DB_PATH = '/path/to/your/database.db'
 
-# Create a table
-cursor.execute('''CREATE TABLE IF NOT EXISTS users
-                  (id INTEGER PRIMARY KEY, name TEXT, email TEXT)''')
+def create_users_table():
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                name TEXT,
+                email TEXT
+            )
+        ''')
+        conn.commit()
 
-# Define the SQL query
-sql = '''INSERT INTO users (name, email)
-         VALUES (?, ?)'''
+def insert_users(users_data):
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        sql = '''INSERT INTO users (name, email) VALUES (?, ?)'''
+        cursor.executemany(sql, users_data)
+        conn.commit()
 
-# Define the data to be inserted
-users_data = [
-    ('John Doe', 'john.doe@abc.com'),
-    ('Jane Smith', 'jane.smith@abc.com'),
-    ('Mike Gabe', 'mike.gabe@abc.com')
-]
-
-# Execute the query with multiple records
-cursor.executemany(sql, users_data)
-
-# Commit the changes
-conn.commit()
-
-# Query the database
-cursor.execute("SELECT * FROM users")
-print(cursor.fetchall())
-
-# Close the connection
-conn.close()
+def fetch_all_users():
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users")
+        return cursor.fetchall()
