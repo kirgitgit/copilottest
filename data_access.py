@@ -29,4 +29,9 @@ def fetch_all_users():
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM users")
         return cursor.fetchall()
-    
+
+def clear_users_table():
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM users")
+        conn.commit()
