@@ -5,6 +5,7 @@ def main():
         ('John Doe', 'john.doe@abc.com'),
         ('Jane Smith', 'jane.smith@abc.com'),
         ('Mike Gabe', 'mike.gabe@abc.com')
+        ('Baga Gaga', 'baga.gaga@abc.com')
     ]
 
     business_logic.setup_database()
