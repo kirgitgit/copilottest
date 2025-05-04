@@ -24,7 +24,7 @@ This Python project focuses on business logic and data access with SQLite databa
 - Mock external dependencies in unit tests
 
 ## Documentation Requirements
-- Update README.md to keep the documentastion up-to-date
+- Update README.md to keep the documentation up-to-date
 - Document all public APIs with examples
 - Include comments for all block of codes
 
